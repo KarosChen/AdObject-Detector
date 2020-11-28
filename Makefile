@@ -25,6 +25,6 @@ transformer.o: $(SRC)transformer.cpp
 video_captor.o: $(SRC)video_captor.cpp
 	$(CXX) -c $(SRC)video_captor.cpp -I$(INCLUDE_PATH)
 
-clean: main.exe main.o advertisement_detector.o transformer.o 
-	del main.exe main.o advertisement_detector.o transformer.o video_captor.o
+clean: AdDetector.exe main.o advertisement_detector.o transformer.o 
+	del AdDetector.exe main.o advertisement_detector.o transformer.o video_captor.o
 
