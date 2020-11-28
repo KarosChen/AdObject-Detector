@@ -10,17 +10,18 @@ using namespace xfeatures2d;
 
 class advertisement_detecor
 {
-public:
-	advertisement_detecor();
-	void set_hessian(int threshold);
-	void set_filter_distance_ratio(double ratio);
-	void detect(Mat &object, Mat &scene, std::vector<Point2f> &object_points, std::vector<Point2f> &scene_points);
 private:
 	int hessian;
 	double filter_distance_ratio;
 	Ptr<SURF> detector;
 	Ptr<SURF> extractor;
 	FlannBasedMatcher matcher;
+
+public:
+	advertisement_detecor();
+	void set_hessian(int threshold);
+	void set_filter_distance_ratio(double ratio);
+	void detect(Mat &object, Mat &scene, std::vector<Point2f> &object_points, std::vector<Point2f> &scene_points);
 };
 
 #endif
