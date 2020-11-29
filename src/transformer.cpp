@@ -2,7 +2,7 @@
 //transform object corner coordinate to scene coordinate
 void transformer::transform_coordinate(Mat &object, Mat &scene, std::vector<Point2f> &good_points_object, std::vector<Point2f> &good_points_scene, std::vector<Point2f> &corner_scene)
 {
-	Mat T = findHomography(good_points_object, good_points_scene);
+	Mat T = findHomography(good_points_object, good_points_scene, 8);
 	
 	std::vector<Point2f> corner_object(4);
 	
