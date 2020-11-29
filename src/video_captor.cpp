@@ -2,19 +2,48 @@
 
 void video_captor::capture_video(std::string filename)
 {
-    VideoCapture captor(filename);
-    Size2d frame_size = Size2d(captor.get(CAP_PROP_FRAME_WIDTH), captor.get(CAP_PROP_FRAME_HEIGHT));
-    Mat frame(frame_size, IMREAD_ANYCOLOR);
-    int count = captor.get(CAP_PROP_FRAME_COUNT);
-    int fps = captor.get(CAP_PROP_FPS);
-    printf("%d, %d", count, fps);
-    for (int i = 0; i < 60; i++)
+    captor.open(filename);
+    if (captor.isOpened())
+    {
+        Size2d frame_size = Size2d(captor.get(CAP_PROP_FRAME_WIDTH), captor.get(CAP_PROP_FRAME_HEIGHT));
+        frame = Mat(frame_size, IMREAD_ANYCOLOR);
+        frame_count = captor.get(CAP_PROP_FRAME_COUNT);
+        fps = captor.get(CAP_PROP_FPS);
+    }
+    else
+    {
+        //error
+    }
+}
+
+int video_captor::get_frame_count()
+{
+    return frame_count;
+}
+
+int video_captor::get_fps()
+{
+    return fps;
+}
+
+Mat& video_captor::read_frame()
+{
+    if (captor.isOpened())
     {
         captor.read(frame);
-        imshow("video", frame);
-        waitKey(1000/fps);
     }
+    else
+    {
+        //error
+    }
+    return frame;
+}
 
-    captor.release();
+void video_captor::release_video()
+{
+    if (captor.isOpened())
+    {
+        captor.release();
+    }
 }
 

@@ -4,6 +4,7 @@
 
 int main()
 {
+	/*
 	Mat img_object_rgb = imread("object.png", IMREAD_ANYCOLOR);
 	Mat img_scene_rgb = imread("scene.png", IMREAD_ANYCOLOR);
 	Mat img_object;
@@ -30,8 +31,16 @@ int main()
 	line(img_scene_rgb, corner_scene[3], corner_scene[0], Scalar(0, 255, 0), 4);
 	imshow("Detected Image", img_scene_rgb);
 
-	waitKey(0);
-	/*
+	waitKey(0);*/
 	video_captor captor;
-	captor.capture_video("C:/Users/user/Desktop/test_video.mp4");*/
+	captor.capture_video("C:/Users/user/Desktop/test_video.mp4");
+	Mat frame;
+	printf("%d", captor.get_fps());
+	for (int i = 0; i < 60; i++)
+	{
+		frame = captor.read_frame();
+        imshow("video", frame);
+        waitKey(1000 / captor.get_fps());
+	}
+	captor.release_video();
 }
