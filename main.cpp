@@ -1,23 +1,21 @@
 #include "src/advertisement_detector.h"
 #include "src/transformer.h"
 #include "src/video_captor.h"
-#include <ctime>
 int main()
 {
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要
+	Mat img_object_rgb = imread("C:/Users/user/Desktop/object.png", IMREAD_ANYCOLOR);
+	Mat img_object;
+	img_object_rgb.copyTo(img_object);
+	cvtColor(img_object, img_object, COLOR_RGB2GRAY);
+	
 	video_captor captor;
 	captor.capture_video("C:/Users/user/Desktop/test_video.mp4");
-	clock_t a, b;
 	for (int i = 0; i < captor.get_frame_count(); i++)
 	{
-		//a = clock();
-		Mat img_object_rgb = imread("C:/Users/user/Desktop/object.png", IMREAD_ANYCOLOR);
 		Mat img_scene_rgb = captor.read_frame();
-		Mat img_object;
 		Mat img_scene;
-		img_object_rgb.copyTo(img_object);
 		img_scene_rgb.copyTo(img_scene);
-		cvtColor(img_object, img_object, COLOR_RGB2GRAY);
 		cvtColor(img_scene, img_scene, COLOR_RGB2GRAY);
 
 		//detect good points
@@ -26,7 +24,7 @@ int main()
 		detector.set_filter_distance_ratio(0.6);
 		std::vector<Point2f> good_points_object, good_points_scene;
 		detector.detect(img_object, img_scene, good_points_object, good_points_scene);
-		//b = clock();
+
 		//transform coordinate from object to scene
 		transformer transformer;
 		std::vector<Point2f> corner_scene(4);
@@ -38,7 +36,6 @@ int main()
 		line(img_scene_rgb, corner_scene[2], corner_scene[3], Scalar(0, 255, 0), 4);
 		line(img_scene_rgb, corner_scene[3], corner_scene[0], Scalar(0, 255, 0), 4);
 
-		//printf("%3.8f       ", double(b-a) / CLOCKS_PER_SEC);
 		imshow("video", img_scene_rgb);
 		waitKey(1000 / captor.get_fps());
 	}

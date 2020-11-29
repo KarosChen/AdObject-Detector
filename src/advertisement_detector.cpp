@@ -1,5 +1,5 @@
 #include "advertisement_detector.h"
-
+#include <ctime>
 advertisement_detecor::advertisement_detecor()
 {
 	hessian = 100;
@@ -20,20 +20,25 @@ void advertisement_detecor::set_filter_distance_ratio(double ratio)
 
 void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f> &good_points_object, std::vector<Point2f> &good_points_scene)
 {
+	clock_t a, b;
 	//detect keypoints
 	std::vector<KeyPoint> keypoints_object, keypoints_scene;
 	detector->detect(object, keypoints_object);
 	detector->detect(scene, keypoints_scene);
-	
+
+
 	//extract descriptor
 	Mat descriptor_object, descriptor_scene;
 	extractor->compute(object, keypoints_object, descriptor_object);
 	extractor->compute(scene, keypoints_scene, descriptor_scene);
 
+	a = clock();
 	//match descriptor
 	std::vector<DMatch> matches;
 	matcher.match(descriptor_object, descriptor_scene, matches);
-
+	b = clock();
+	printf("%3.8f       ", double(b - a) / CLOCKS_PER_SEC);
+	
 	//find max and min distance
 	double max_dis = 0, min_dis = 100;
 	for (int i = 0; i < descriptor_object.rows; i++)
