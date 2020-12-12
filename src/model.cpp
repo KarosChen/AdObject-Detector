@@ -40,6 +40,7 @@ void model::detect_frame()
         line(img_scene_rgb, corner_scene[2], corner_scene[3], Scalar(0, 255, 0), 4);
         line(img_scene_rgb, corner_scene[3], corner_scene[0], Scalar(0, 255, 0), 4);
         imshow("video", img_scene_rgb);
+        temp.push_back(img_scene_rgb);
         waitKey(1000 / captor.get_fps());
     }
 }
@@ -50,8 +51,23 @@ void model::start()
     {
         std::function<void()> exe_fun = std::bind(&model::detect_frame, this);
         pool.enqueue_task(exe_fun);
-        //detect_frame();
     }
+    /*Test Time code
+    clock_t a, b;
+    a = clock();
+    for (int i = 0; i < 30; i++)
+    {
+        detect_frame();
+    }
+    for (int i = 0; i < 30; i++)
+    {
+        std::function<void()> exe_fun = std::bind(&model::detect_frame, this);
+        pool.enqueue_task(exe_fun);
+    }
+    while (temp.size() < 30)
+    {}
+    b = clock();
+    printf("%3.8f       ", double(b - a) / CLOCKS_PER_SEC);*/
 }
 
 void model::end()

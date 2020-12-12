@@ -15,7 +15,7 @@ void advertisement_detecor::set_filter_distance_ratio(double ratio)
 
 void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f> &good_points_object, std::vector<Point2f> &good_points_scene)
 {
-	clock_t a, b;
+	//clock_t a, b;
 	//detect keypoints
 	std::vector<KeyPoint> keypoints_object, keypoints_scene;
 	detector->detect(object, keypoints_object);

@@ -20,6 +20,8 @@ private:
     video_captor captor;
     thread_pool pool;
     std::mutex captor_mutex;
+    std::vector<Mat> temp;
+    clock_t a, b;
 };
 
 #endif
