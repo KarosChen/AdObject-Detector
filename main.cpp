@@ -1,10 +1,13 @@
-#include "src/advertisement_detector.h"
-#include "src/transformer.h"
-#include "src/video_captor.h"
+#include "src/model.h"
 int main()
 {
+	model model;
+	model.start();
+	
+	
+	
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要
-	Mat img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
+	/*Mat img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
 	Mat img_object;
 	img_object_rgb.copyTo(img_object);
 	cvtColor(img_object, img_object, COLOR_RGB2GRAY);
@@ -39,6 +42,7 @@ int main()
 		waitKey(1000 / captor.get_fps());
 	}
 	captor.release_video();
+	*/
 	/*
 	Mat img_object_rgb = imread("object.png", IMREAD_ANYCOLOR);
 	Mat img_scene_rgb = imread("scene.png", IMREAD_ANYCOLOR);

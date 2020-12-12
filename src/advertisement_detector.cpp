@@ -26,14 +26,14 @@ void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f>
 	extractor->compute(object, keypoints_object, descriptor_object);
 	extractor->compute(scene, keypoints_scene, descriptor_scene);
 
-	a = clock();
+	//a = clock();
 
 	//match descriptor
 	std::vector<DMatch> matches;
 	matcher.match(descriptor_object, descriptor_scene, matches);
 
-	b = clock();
-	printf("%3.8f       ", double(b - a) / CLOCKS_PER_SEC);
+	//b = clock();
+	//printf("%3.8f       ", double(b - a) / CLOCKS_PER_SEC);
 
 	//find max and min distance
 	double max_dis = 0, min_dis = 100;
