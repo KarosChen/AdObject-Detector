@@ -4,7 +4,7 @@
 int main()
 {
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要
-	Mat img_object_rgb = imread("C:/Users/user/Desktop/object.png", IMREAD_ANYCOLOR);
+	Mat img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
 	Mat img_object;
 	img_object_rgb.copyTo(img_object);
 	cvtColor(img_object, img_object, COLOR_RGB2GRAY);
@@ -20,7 +20,6 @@ int main()
 
 		//detect good points
 		advertisement_detecor detector;
-		detector.set_hessian(2000);
 		detector.set_filter_distance_ratio(0.6);
 		std::vector<Point2f> good_points_object, good_points_scene;
 		detector.detect(img_object, img_scene, good_points_object, good_points_scene);
@@ -76,8 +75,8 @@ int main()
 
 	//-- Step 1: Detect the keypoints using SURF Detector
 	int minHessian = 400;
-
-	Ptr<SURF> detector = SURF::create(minHessian);
+	Ptr<FastFeatureDetector> detector = FastFeatureDetector::create(40);
+	//Ptr<SURF> detector = SURF::create(minHessian);
 	std::vector<KeyPoint> keypoints_object, keypoints_scene;
 	
 	detector->detect(img_object, keypoints_object);
@@ -117,7 +116,7 @@ int main()
 
 	for (int i = 0; i < descriptors_object.rows; i++)
 	{
-		if (matches[i].distance < 3 * min_dist)
+		if (matches[i].distance < max_dist * 0.6)
 		{
 			good_matches.push_back(matches[i]);
 		}

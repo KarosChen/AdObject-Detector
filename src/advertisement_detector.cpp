@@ -2,15 +2,10 @@
 #include <ctime>
 advertisement_detecor::advertisement_detecor()
 {
-	hessian = 100;
 	filter_distance_ratio = 0.2;
-	detector = SURF::create(hessian);
+	//detector = SURF::create();
+	detector = FastFeatureDetector::create();
 	extractor = SURF::create();
-}
-
-void advertisement_detecor::set_hessian(int threshold)
-{	
-	hessian = threshold;
 }
 
 void advertisement_detecor::set_filter_distance_ratio(double ratio)
@@ -26,19 +21,20 @@ void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f>
 	detector->detect(object, keypoints_object);
 	detector->detect(scene, keypoints_scene);
 
-
 	//extract descriptor
 	Mat descriptor_object, descriptor_scene;
 	extractor->compute(object, keypoints_object, descriptor_object);
 	extractor->compute(scene, keypoints_scene, descriptor_scene);
 
 	a = clock();
+
 	//match descriptor
 	std::vector<DMatch> matches;
 	matcher.match(descriptor_object, descriptor_scene, matches);
+
 	b = clock();
 	printf("%3.8f       ", double(b - a) / CLOCKS_PER_SEC);
-	
+
 	//find max and min distance
 	double max_dis = 0, min_dis = 100;
 	for (int i = 0; i < descriptor_object.rows; i++)
