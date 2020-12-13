@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "image_process.h"
 #include "advertisement_detector.h"
 #include "transformer.h"
 #include "video_captor.h"
@@ -20,6 +21,7 @@ private:
     int interval;
     Mat img_object_rgb;
     Mat img_object;
+    image_process processor;
     video_captor captor;
     thread_pool pool;
     std::mutex captor_mutex;

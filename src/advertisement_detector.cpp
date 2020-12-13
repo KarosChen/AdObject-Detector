@@ -3,8 +3,8 @@
 advertisement_detecor::advertisement_detecor()
 {
 	filter_distance_ratio = 0.2;
-	//detector = SURF::create();
-	detector = FastFeatureDetector::create();
+	detector = SURF::create();
+	//detector = FastFeatureDetector::create();
 	extractor = SURF::create();
 }
 

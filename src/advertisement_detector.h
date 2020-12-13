@@ -12,8 +12,8 @@ class advertisement_detecor
 {
 private:
 	double filter_distance_ratio;
-	//Ptr<SURF> detector;
-	Ptr<FastFeatureDetector> detector;
+	Ptr<SURF> detector;
+	//Ptr<FastFeatureDetector> detector;
 	Ptr<SURF> extractor;
 	FlannBasedMatcher matcher;
 
