@@ -11,17 +11,20 @@ class model
 public:
     model();
     void detect_frame();
+    void play_frame();
     void start();
     void end();
+
 private:
     bool is_detect;
+    int interval;
     Mat img_object_rgb;
     Mat img_object;
     video_captor captor;
     thread_pool pool;
     std::mutex captor_mutex;
-    std::vector<Mat> temp;
-    clock_t a, b;
+    std::vector<Mat> output_imgs;
+    //clock_t a, b;
 };
 
 #endif

@@ -3,9 +3,7 @@ int main()
 {
 	model model;
 	model.start();
-	
-	
-	
+
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要
 	/*Mat img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
 	Mat img_object;
@@ -72,7 +70,7 @@ int main()
 	imshow("Detected Image", img_scene_rgb);
 
 	waitKey(0);*/
-/*
+	/*
 	Mat img_object = imread("object.png", IMREAD_ANYCOLOR);
 	Mat img_scene = imread("scene.png", IMREAD_ANYCOLOR);
 
