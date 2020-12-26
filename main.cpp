@@ -8,7 +8,7 @@ int main()
 	while (true)
 	{
 		memset(detected_video_path, 0, sizeof(detected_video_path));
-		std::cout << "Please enter detected video path !\n";
+		std::cout << "\nPlease enter detected video path !\n";
 		std::cin >> detected_video_path;
 		if (FILE *file = fopen(detected_video_path, "r"))
 		{
@@ -19,7 +19,7 @@ int main()
 	while (true)
 	{
 		memset(target_object_path, 0, sizeof(target_object_path));
-		std::cout << "Please enter target object path !\n";
+		std::cout << "\nPlease enter target object path !\n";
 		std::cin >> target_object_path;
 		if (FILE *file = fopen(target_object_path, "r"))
 		{

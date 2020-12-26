@@ -18,7 +18,7 @@ public:
     void end();
 
 private:
-    bool is_detect;
+    bool is_start;
     int interval;
     Mat img_object_rgb;
     Mat img_object;
