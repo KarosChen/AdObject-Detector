@@ -12,7 +12,6 @@ public:
     void show();
 private:
     cv::Mat window_frame;
-
 };
 
 #endif

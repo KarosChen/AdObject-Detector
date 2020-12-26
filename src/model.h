@@ -11,7 +11,7 @@
 class model
 {
 public:
-    model();
+    model(char *video, char *target);
     void detect_frame();
     void play_frame();
     void start();

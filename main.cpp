@@ -1,8 +1,33 @@
 #include "src/model.h"
+#include <iostream>
 
 int main()
 {
-	model model;
+	char detected_video_path[200];
+	char target_object_path[200];
+	while (true)
+	{
+		memset(detected_video_path, 0, sizeof(detected_video_path));
+		std::cout << "Please enter detected video path !\n";
+		std::cin >> detected_video_path;
+		if (FILE *file = fopen(detected_video_path, "r"))
+		{
+			fclose(file);
+			break;
+		}
+	}
+	while (true)
+	{
+		memset(target_object_path, 0, sizeof(target_object_path));
+		std::cout << "Please enter target object path !\n";
+		std::cin >> target_object_path;
+		if (FILE *file = fopen(target_object_path, "r"))
+		{
+			fclose(file);
+			break;
+		}
+	}
+	model model(detected_video_path, target_object_path);
 	model.start();
 	return 0;
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要

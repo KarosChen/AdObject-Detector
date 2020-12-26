@@ -2,14 +2,14 @@
 #include "../gui/cvui.h"
 
 //initialize model
-model::model()
+model::model(char *video, char *target)
 {
     pool.create_threads(5);
     is_detect = true;
     interval = 10;
-    img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
+    img_object_rgb = imread(target, IMREAD_ANYCOLOR);
     processor.convert_color(img_object_rgb, img_object, COLOR_RGB2GRAY);
-    captor.capture_video("C:/Users/user/Desktop/test_video.mp4");
+    captor.capture_video(video);
 }
 
 //detect one frame
@@ -65,13 +65,8 @@ void model::play_frame()
     {
         if (output_imgs.size() > frame_num)
         {
-            Size new_size = output_imgs[frame_num].size();
-            new_size.height = 500;
-            new_size.width = 500;
-            Mat tar;
-            resize(output_imgs[frame_num], tar, new_size);
-            frame_num ++;
-            gui.refresh(tar);
+            gui.refresh(output_imgs[frame_num]);
+            frame_num++;
             gui.show();
         }
 

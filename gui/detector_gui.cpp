@@ -5,7 +5,7 @@
 detector_gui::detector_gui()
 {
     cvui::init(WINDOW_NAME);
-    window_frame = cv::Mat(cv::Size(800, 600), CV_8UC3);
+    window_frame = cv::Mat(cv::Size(1000, 600), CV_8UC3);
 }
 
 void detector_gui::create()
@@ -16,8 +16,13 @@ void detector_gui::create()
 
 void detector_gui::refresh(cv::Mat &image)
 {
+    cv::Size new_size = image.size();
+    new_size.width = 800;
+    new_size.height = 590;
+    cv::Mat tar;
+    cv::resize(image, tar, new_size);
     window_frame = cv::Scalar(49, 52, 49);
-    cvui::image(window_frame, 10, 10, image);
+    cvui::image(window_frame, 5, 5, tar);
 }
 
 void detector_gui::show()
