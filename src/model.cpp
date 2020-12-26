@@ -1,4 +1,5 @@
 #include "model.h"
+#include "../gui/cvui.h"
 
 //initialize model
 model::model()
@@ -58,14 +59,26 @@ void model::detect_frame()
 //play frame in output images vector
 void model::play_frame()
 {
+    detector_gui gui;
     int frame_num = 0;
     while (true)
     {
         if (output_imgs.size() > frame_num)
         {
-            imshow("video", output_imgs[frame_num]);
-            frame_num++;
-            waitKey(1000 / captor.get_fps());
+            Size new_size = output_imgs[frame_num].size();
+            new_size.height = 500;
+            new_size.width = 500;
+            Mat tar;
+            resize(output_imgs[frame_num], tar, new_size);
+            frame_num ++;
+            gui.refresh(tar);
+            gui.show();
+        }
+
+        // Check if ESC key was pressed
+        if (cv::waitKey(20) == 27)
+        {
+            break;
         }
     }
 }

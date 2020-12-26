@@ -1,6 +1,7 @@
 CXX = g++
 
 SRC = ./src/
+GUI_SRC = ./gui/
 
 INCLUDE_PATH = D:/opencv-440/opencv-440-mingw-release/include
 
@@ -10,11 +11,14 @@ LIBS = -lopencv_imgproc440 -lopencv_core440 -lopencv_imgcodecs440 -lopencv_highg
 	   -lopencv_calib3d440 -lopencv_xfeatures2d440 -lopencv_features2d440 -lopencv_flann440 \
 	   -lopencv_videoio440
 
-all: main.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o
-	$(CXX) -o AdDetector main.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o -L$(LIBS_PATH) $(LIBS)
-
+all: main.o detector_gui.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o 
+	$(CXX) -o AdDetector main.o detector_gui.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o -L$(LIBS_PATH) $(LIBS)
+	
 main.o: main.cpp 
 	$(CXX) -c main.cpp -I$(INCLUDE_PATH)
+
+detector_gui.o: $(GUI_SRC)detector_gui.cpp
+	$(CXX) -c $(GUI_SRC)detector_gui.cpp -I$(INCLUDE_PATH)
 
 model.o: $(SRC)model.cpp
 	$(CXX) -c $(SRC)model.cpp -I$(INCLUDE_PATH)
@@ -34,6 +38,6 @@ image_process.o: $(SRC)image_process.cpp
 thread_pool.o: $(SRC)thread_pool.cpp
 	$(CXX) -c $(SRC)thread_pool.cpp
 
-clean: AdDetector.exe main.o advertisement_detector.o transformer.o 
-	del AdDetector.exe main.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o
+clean: AdDetector.exe main.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o detector_gui.o 
+	del AdDetector.exe main.o model.o advertisement_detector.o transformer.o video_captor.o image_process.o thread_pool.o detector_gui.o
 

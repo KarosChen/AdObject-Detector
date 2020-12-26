@@ -1,9 +1,10 @@
 #include "src/model.h"
+
 int main()
 {
 	model model;
 	model.start();
-
+	return 0;
 	//在find_Homo中 缺少一個參數8  對整體辨識的效果很重要
 	/*Mat img_object_rgb = imread("C:/Users/user/Desktop/object3.png", IMREAD_ANYCOLOR);
 	Mat img_object;

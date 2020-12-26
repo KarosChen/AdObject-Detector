@@ -6,6 +6,7 @@
 #include "transformer.h"
 #include "video_captor.h"
 #include "thread_pool.h"
+#include "../gui/detector_gui.h"
 
 class model
 {
