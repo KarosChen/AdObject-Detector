@@ -63,6 +63,7 @@ void model::play_frame()
     {
         Mat temp = cv::Mat(cv::Size(800, 590), CV_8UC3);
         temp = cv::Scalar(100, 100, 100);
+        interval = gui.get_interval();
         gui.refresh(temp);
         gui.show();
     }
@@ -82,8 +83,6 @@ void model::play_frame()
             break;
         }
     }
-    
-
 }
 
 //start model

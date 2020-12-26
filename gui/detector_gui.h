@@ -11,12 +11,12 @@ public:
     void refresh(cv::Mat &image);
     void show();
     bool get_start_state();
+    int get_interval();
 private:
     cv::Mat window_frame;
-    char *mode;
     char *start_label;
     bool start_state;
-    int initial_interval;
+    int interval;
 };
 
 #endif
