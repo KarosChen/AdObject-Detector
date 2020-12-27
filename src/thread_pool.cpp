@@ -19,6 +19,7 @@ void thread_pool::infinite_loop_function()
             std::unique_lock<std::mutex> lock(queue_mutex);
             condition.wait(lock, [this](){return stop || (!tasks_queue.empty());});
             if (stop && tasks_queue.empty()){
+                printf("end");
                 return;
             }
             task = std::move(tasks_queue.front());

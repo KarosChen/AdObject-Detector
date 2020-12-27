@@ -48,16 +48,20 @@ void detector_gui::refresh(cv::Mat &image)
         // 0 is surf, 1 is fast
         mode_state = 1;
     }
-    if (!start_state)
+
+    if (cvui::button(window_frame, 850, 405, 100, 60, start_label))
     {
-        if (cvui::button(window_frame, 850, 405, 100, 60, start_label))
+        if (!start_state)
         {
-            if (!start_state)
-            {
-                start_label = "Stop";
-                start_state = true;
-            }
+            start_label = "Stop";
+            start_state = true;
         }
+        else
+        {
+            start_label = "Start";
+            start_state = false;
+        }
+        
     }
     cvui::text(window_frame, 850, 20, "Detector: ");
     cvui::text(window_frame, 920, 20, mode_label);

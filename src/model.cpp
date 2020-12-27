@@ -4,7 +4,7 @@
 //initialize model
 model::model(char *video, char *target)
 {
-    pool.create_threads(5);
+    pool.create_threads(4);
     is_start = false;
     d_type = detector_t::SURF;
     interval = 10;
@@ -44,7 +44,7 @@ void model::detect_frame()
     transformer transformer;
     std::vector<Point2f> corner_scene(4);
     transformer.transform_coordinate(img_object, img_scene, good_points_object, good_points_scene, corner_scene);
-
+    
     //draw bounding box on detected object
     for (int i = 0; i < interval; i++)
     {
@@ -78,10 +78,10 @@ void model::play_frame()
             gui.show();
         }
 
-        // Check if ESC key was pressed
-        if (cv::waitKey(20) == 27)
+        if (!gui.get_start_state())
         {
-            break;
+            is_start = false;
+            return;
         }
     }
 }
@@ -96,8 +96,16 @@ void model::start()
     };
     for (int i = 0; i < captor.get_frame_count(); i = i + interval)
     {
-        std::function<void()> exe_fun = std::bind(&model::detect_frame, this);
-        pool.enqueue_task(exe_fun);
+        if (is_start)
+        {
+            std::function<void()> exe_fun = std::bind(&model::detect_frame, this);
+            pool.enqueue_task(exe_fun);
+        }
+        else
+        {
+            return;
+        }
+        
     }
     /*Test Time code
     clock_t a, b;
@@ -120,5 +128,5 @@ void model::start()
 //release video and other objects
 void model::end()
 {
-    captor.release_video();
+    pool.~thread_pool();
 }
