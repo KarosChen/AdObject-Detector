@@ -15,10 +15,6 @@ advertisement_detecor::advertisement_detecor(detector_t type)
 		extractor = SurfDescriptorExtractor::create();
 		break;
 	}
-	/*
-	detector = SURF::create();
-	extractor = SURF::create();*/
-	//detector = FastFeatureDetector::create();
 }
 
 void advertisement_detecor::set_filter_distance_ratio(double ratio)

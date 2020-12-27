@@ -20,7 +20,6 @@ private:
 	Ptr<Feature2D> detector;
 	Ptr<Feature2D> extractor;
 	double filter_distance_ratio;
-	//Ptr<FastFeatureDetector> detector;
 	FlannBasedMatcher matcher;
 public:
 	advertisement_detecor(detector_t type);

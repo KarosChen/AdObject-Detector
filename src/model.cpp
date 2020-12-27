@@ -6,6 +6,7 @@ model::model(char *video, char *target)
 {
     pool.create_threads(5);
     is_start = false;
+    d_type = detector_t::SURF;
     interval = 10;
     img_object_rgb = imread(target, IMREAD_ANYCOLOR);
     processor.convert_color(img_object_rgb, img_object, COLOR_RGB2GRAY);
@@ -27,7 +28,6 @@ void model::detect_frame()
             }
         }
     }
-
     //resize image and convert color to gray
     Mat img_scene;
     processor.set_scale_factor(0.5);
@@ -35,11 +35,11 @@ void model::detect_frame()
     processor.convert_color(img_scene, img_scene, COLOR_RGB2GRAY);
     
     //detect good points
-    advertisement_detecor detector(detector_t::SURF);
+    advertisement_detecor detector(d_type);
     detector.set_filter_distance_ratio(0.6);
     std::vector<Point2f> good_points_object, good_points_scene;
     detector.detect(img_object, img_scene, good_points_object, good_points_scene);
-    
+
     //transform coordinate from object to scene
     transformer transformer;
     std::vector<Point2f> corner_scene(4);
@@ -68,6 +68,7 @@ void model::play_frame()
         gui.show();
     }
     is_start = true;
+    d_type= (detector_t)gui.get_mode_state();
     while (true)
     {
         if (output_imgs.size() > frame_num)

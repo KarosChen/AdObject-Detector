@@ -19,6 +19,7 @@ public:
 
 private:
     bool is_start;
+    detector_t d_type;
     int interval;
     Mat img_object_rgb;
     Mat img_object;
