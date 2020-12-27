@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <string>
 #include "image_process.h"
 #include "advertisement_detector.h"
 #include "transformer.h"
@@ -11,7 +12,7 @@
 class model
 {
 public:
-    model(char *video, char *target);
+    model(std::string video, std::string target);
     void detect_frame();
     void play_frame();
     void start();
@@ -28,6 +29,7 @@ private:
     thread_pool pool;
     std::mutex captor_mutex;
     std::vector<Mat> output_imgs;
+    std::mutex output_imgs_mutex;
     //clock_t a, b;
 };
 

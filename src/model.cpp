@@ -2,9 +2,9 @@
 #include "../gui/cvui.h"
 
 //initialize model
-model::model(char *video, char *target)
+model::model(std::string video, std::string target)
 {
-    pool.create_threads(4);
+    pool.create_threads(5);
     is_start = false;
     d_type = detector_t::SURF;
     interval = 10;
@@ -44,12 +44,15 @@ void model::detect_frame()
     transformer transformer;
     std::vector<Point2f> corner_scene(4);
     transformer.transform_coordinate(img_object, img_scene, good_points_object, good_points_scene, corner_scene);
-    
+
     //draw bounding box on detected object
-    for (int i = 0; i < interval; i++)
     {
-        processor.draw_bouding_box(img_scene_rgbs[i], corner_scene);
-        output_imgs.emplace_back(img_scene_rgbs[i]);
+        std::unique_lock<std::mutex> lock(output_imgs_mutex);
+        for (int i = 0; i < interval; i++)
+        {
+            processor.draw_bouding_box(img_scene_rgbs[i], corner_scene);
+            output_imgs.emplace_back(img_scene_rgbs[i]);
+        }
     }
 }
 
@@ -58,7 +61,6 @@ void model::play_frame()
 {
     detector_gui gui;
     gui.create();
-    int frame_num = 0;
     while (!gui.get_start_state())
     {
         Mat temp = cv::Mat(cv::Size(800, 590), CV_8UC3);
@@ -69,12 +71,13 @@ void model::play_frame()
     }
     is_start = true;
     d_type= (detector_t)gui.get_mode_state();
+    
     while (true)
     {
-        if (output_imgs.size() > frame_num)
+        if (!output_imgs.empty())
         {
-            gui.refresh(output_imgs[frame_num]);
-            frame_num++;
+            gui.refresh(output_imgs.at(0));
+            output_imgs.erase(output_imgs.begin());
             gui.show();
         }
 
@@ -91,9 +94,7 @@ void model::start()
 {
     std::function<void()> play_frame = std::bind(&model::play_frame, this);
     pool.enqueue_task(play_frame);
-    while (!is_start)
-    {
-    };
+    while (!is_start){}
     for (int i = 0; i < captor.get_frame_count(); i = i + interval)
     {
         if (is_start)
@@ -105,7 +106,6 @@ void model::start()
         {
             return;
         }
-        
     }
     /*Test Time code
     clock_t a, b;
