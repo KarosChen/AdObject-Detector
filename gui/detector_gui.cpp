@@ -18,9 +18,11 @@ void detector_gui::create()
 {
     cv::Mat img = cv::Mat(cv::Size(800, 590), CV_8UC3);
     cvui::image(window_frame, 5, 5, img);
-    cvui::text(window_frame, 850, 5, mode_label);
-    cvui::button(window_frame, 850, 105, 100, 60, "SURF");
-    cvui::button(window_frame, 850, 205, 100, 60, "FAST");
+    cvui::text(window_frame, 850, 20, "Detector: ");
+    cvui::text(window_frame, 920, 20, mode_label);
+    cvui::button(window_frame, 850, 55, 100, 60, "SURF");
+    cvui::button(window_frame, 850, 135, 100, 60, "FAST");
+    cvui::text(window_frame, 850, 270, "Detect Interval");
     cvui::trackbar(window_frame, 810, 305, 180, &interval, (int)5, (int)30, (int)5, "%.0Lf", cvui::TRACKBAR_DISCRETE | cvui::TRACKBAR_HIDE_STEP_SCALE, (int)5);
     cvui::button(window_frame, 850, 405, 100, 60, start_label);
 }
@@ -34,13 +36,13 @@ void detector_gui::refresh(cv::Mat &image)
     cv::resize(image, tar, new_size);
     window_frame = cv::Scalar(49, 52, 49);
     cvui::image(window_frame, 5, 5, tar);
-    if (cvui::button(window_frame, 850, 105, 100, 60, "SURF"))
+    if (cvui::button(window_frame, 850, 55, 100, 60, "SURF"))
     {
         mode_label = "SURF";
         // 0 is surf, 1 is fast
         mode_state = 0;
     }
-    if (cvui::button(window_frame, 850, 205, 100, 60, "FAST"))
+    if (cvui::button(window_frame, 850, 135, 100, 60, "FAST"))
     {
         mode_label = "FAST";
         // 0 is surf, 1 is fast
@@ -57,7 +59,9 @@ void detector_gui::refresh(cv::Mat &image)
             }
         }
     }
-    cvui::text(window_frame, 850, 5, mode_label);
+    cvui::text(window_frame, 850, 20, "Detector: ");
+    cvui::text(window_frame, 920, 20, mode_label);
+    cvui::text(window_frame, 850, 270, "Detect Interval");
     cvui::trackbar(window_frame, 810, 305, 180, &interval, (int)5, (int)30, (int)5, "%.0Lf", cvui::TRACKBAR_DISCRETE | cvui::TRACKBAR_HIDE_STEP_SCALE, (int)5);
 }
 
