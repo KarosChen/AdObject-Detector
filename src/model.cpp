@@ -35,7 +35,7 @@ void model::detect_frame()
     processor.convert_color(img_scene, img_scene, COLOR_RGB2GRAY);
     
     //detect good points
-    advertisement_detecor detector;
+    advertisement_detecor detector(detector_t::SURF);
     detector.set_filter_distance_ratio(0.6);
     std::vector<Point2f> good_points_object, good_points_scene;
     detector.detect(img_object, img_scene, good_points_object, good_points_scene);

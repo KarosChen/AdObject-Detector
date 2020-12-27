@@ -1,11 +1,24 @@
 #include "advertisement_detector.h"
 #include <ctime>
-advertisement_detecor::advertisement_detecor()
+advertisement_detecor::advertisement_detecor(detector_t type)
 {
 	filter_distance_ratio = 0.2;
+	switch (type)
+	{
+	case detector_t::SURF:
+		detector = SurfFeatureDetector::create();
+		extractor = SurfDescriptorExtractor::create();
+		break;
+
+	case detector_t::FAST:
+		detector = FastFeatureDetector::create();
+		extractor = SurfDescriptorExtractor::create();
+		break;
+	}
+	/*
 	detector = SURF::create();
+	extractor = SURF::create();*/
 	//detector = FastFeatureDetector::create();
-	extractor = SURF::create();
 }
 
 void advertisement_detecor::set_filter_distance_ratio(double ratio)
@@ -49,7 +62,6 @@ void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f>
 			max_dis = dis;
 		}
 	}
-
 	std::vector<DMatch> good_matches;
 	//filter similar descriptor
 	if (max_dis > 0)
@@ -66,7 +78,6 @@ void advertisement_detecor::detect(Mat &object, Mat &scene, std::vector<Point2f>
 	{
 		good_matches = matches;
 	}
-
 	for (int i = 0; i < good_matches.size(); i++)
 	{
 		int object_index = good_matches[i].queryIdx;

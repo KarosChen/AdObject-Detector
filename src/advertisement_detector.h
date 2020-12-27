@@ -8,17 +8,22 @@
 using namespace cv;
 using namespace xfeatures2d;
 
+enum detector_t
+{
+	SURF,
+	FAST
+};
+
 class advertisement_detecor
 {
 private:
+	Ptr<Feature2D> detector;
+	Ptr<Feature2D> extractor;
 	double filter_distance_ratio;
-	Ptr<SURF> detector;
 	//Ptr<FastFeatureDetector> detector;
-	Ptr<SURF> extractor;
 	FlannBasedMatcher matcher;
-
 public:
-	advertisement_detecor();
+	advertisement_detecor(detector_t type);
 	void set_filter_distance_ratio(double ratio);
 	void detect(Mat &object, Mat &scene, std::vector<Point2f> &object_points, std::vector<Point2f> &scene_points);
 };
