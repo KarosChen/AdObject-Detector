@@ -71,12 +71,18 @@ void model::play_frame()
     }
     is_start = true;
     d_type= (detector_t)gui.get_mode_state();
-    
+
     while (true)
     {
         if (!output_imgs.empty())
-        {
-            gui.refresh(output_imgs.at(0));
+        {   
+            //Solve getting empty image from output_imgs problem
+            Mat temp;
+            while (output_imgs.at(0).size().width == 0 && output_imgs.at(0).size().height == 0)
+            {
+            }
+            temp = output_imgs.at(0);
+            gui.refresh(temp);
             output_imgs.erase(output_imgs.begin());
             gui.show();
         }
